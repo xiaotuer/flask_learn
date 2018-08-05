@@ -31,6 +31,16 @@ def user_list():
         users.append(user)
     return render_template("user_list.html", users=users)
 
+
+@app.route("/one")
+def one_base():
+    return render_template("one_base.html")
+
+
+@app.route("/two")
+def two_base():
+    return render_template("two_base.html")
+
 if __name__ == '__main__':
     app.run()
 

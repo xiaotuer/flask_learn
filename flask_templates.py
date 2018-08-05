@@ -14,6 +14,23 @@ def user_index():
     return render_template('user_index.html', user=user)
 
 
+@app.route('/query_user/<user_id>')
+def query_user(user_id):
+    user = None
+    if int(user_id) == 1:
+        user = User(1, '小鸟儿')
+
+    return render_template('user_id.html', user=user)
+
+
+@app.route('/users')
+def user_list():
+    users = []
+    for i in range(1, 11):
+        user = User(i, '小鸟儿'+str(i))
+        users.append(user)
+    return render_template("user_list.html", users=users)
+
 if __name__ == '__main__':
     app.run()
 

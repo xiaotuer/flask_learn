@@ -1,7 +1,11 @@
 # -*- encoding:utf-8 -*-
+from random import random
+
 from models import User
-from flask import Flask, request, url_for, render_template
+from flask import Flask, request, url_for, render_template, redirect
 app = Flask(__name__)  # type: Flask
+auth_code = {}
+
 @app.route('/')
 def hello_world():
     content = "小鸟唧唧jijij"
@@ -41,6 +45,24 @@ def one_base():
 def two_base():
     return render_template("two_base.html")
 
+
+@app.route("/client/login", methods=['POST', 'GET'])
+def client_login():
+    url = 'http://localhost:5000/oauth'
+    return redirect(url)
+
+
+@app.route("/oauth", methods=['POST', 'GET'])
+def oauth():
+    if request.args.get('code'):
+        if auth_code.get(int(request.args.get('code'))) == request.args.get('redirect_url'):
+            return gen_code(request.args.get('client_id'))
+    return 'Please login...'
+
+
+def gen_code(url):
+    code = random.randint(0, 10000)
+    auth_code[code] = url
 
 
 
